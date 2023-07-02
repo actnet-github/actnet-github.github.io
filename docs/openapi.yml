@@ -16,10 +16,10 @@ paths:
   /register:
     post:
       tags:
-        - user
-      summary: ユーザ登録
+        - TrunkInformation
+      summary: 店舗登録
       description: |
-        クライアントが入力する情報をもとにユーザ情報を登録する
+        クライアントが入力する情報をもとに店舗情報を登録する
       requestBody:
         required: true
         content:
@@ -27,24 +27,25 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                AppSheetTrunkId:
                   type: string
-                  example: 山田太郎
-                email:
+                  example: 12345
+                ManagementNo:
                   type: string
-                  format: email
-                  example: yamada@hoge.hoge
-                password:
+                  example: 67890
+                TrunkName:
                   type: string
-                  format: password
-                  example: qwerty123456789
+                  example: バイクストレージ三鷹市深大寺
+                Comment:
+                  type: string
+                  example: 備考
               required:
-                - name
-                - email
-                - password
+                - AppSheetTrunkId
+                - ManagementNo
+                - TrunkName
       responses:
         '200':
-          description: ユーザ情報登録成功
+          description: 店舗情報登録成功
           content:
             application/json:
               schema:
@@ -59,7 +60,7 @@ paths:
                     example: "POST"
                   message:
                     type: string
-                    example: "ユーザ登録に成功しました。"
+                    example: "店舗登録に成功しました。"
                   data:
                     type: object
                     properties:
@@ -73,7 +74,7 @@ paths:
                   - data
         '409':
           description: |
-            登録済みのメールアドレス
+            登録済みのAppSheetId
           content:
             application/json:
               schema:
@@ -88,7 +89,7 @@ paths:
                     example: "POST"
                   message:
                     type: string
-                    example: "登録済みのメールアドレスです。"
+                    example: "登録済みのAppSheetIdです。"
                   data: 
                     type: object
                     example: null
