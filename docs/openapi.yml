@@ -105,6 +105,29 @@ paths:
                     example: null
         '500':
           $ref: '#/components/responses/500Error'
+components:
+  responses:
+    500Error:
+      description: |
+        サーバー上のエラー
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                format: int64
+                example: "500"
+              method:
+                type: string
+                example: "POST"
+              message: 
+                type: string
+                example: "サーバー側で何らかのエラーが発生しました。"
+              data:
+                type: object
+                example: null
 paths:
   /register:
     post:
