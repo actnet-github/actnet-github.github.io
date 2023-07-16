@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: RESTful API
+  description: >-
+    バックエンドAPI
+servers:
+  - url: 'http://{host}:8081/api/v1'
+    description: go service api server endpoint application
+    variables:
+      host:
+        default: localhost
+        enum:
+          - localhost
+paths:
+  /customer_register:
+    post:
+      tags:
+        - CustomerRegister
+      summary: 顧客登録
+      description: |
+        クライアントが入力する情報をもとに顧客情報を登録する
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AppSheetCustomerId:
+                  type: string
+                  example: EF54AF8A
+                ManagementNo:
+                  type: string
+                  example: 67890
+                CustomerName:
+                  type: string
+                  example: テスト太郎
+                zipcode:
+                  type: string
+                  example: 1000001
+                pref:
+                  type: string
+                  example: 東京都
+                city:
+                  type: string
+                  example: 新宿区
+                other_address:
+                  type: string
+                  example: 西新宿１−１
+                comment:
+                  type: string
+                  example: 備考
+              required:
+                - AppSheetCustomerId
+      responses:
+        '200':
+          description: 顧客情報登録成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 200
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "顧客登録に成功しました。"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                required:
+                  - statusCode
+                  - method
+                  - message
+                  - data
+        '409':
+          description: |
+            登録済みのAppSheetId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 409
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "登録済みのAppSheetIdです。"
+                  data: 
+                    type: object
+                    example: null
+        '500':
+          $ref: '#/components/responses/500Error'
+components:
+  responses:
+    500Error:
+      description: |
+        サーバー上のエラー
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                format: int64
+                example: "500"
+              method:
+                type: string
+                example: "POST"
+              message: 
+                type: string
+                example: "サーバー側で何らかのエラーが発生しました。"
+              data:
+                type: object
+                example: null
