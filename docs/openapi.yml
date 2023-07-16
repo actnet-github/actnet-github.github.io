@@ -100,7 +100,178 @@ paths:
                   message:
                     type: string
                     example: "登録済みのAppSheetIdです。"
-                  data: 
+                  data:
+                    type: object
+                    example: null
+        '500':
+          $ref: '#/components/responses/500Error'
+  /customer_contact_register:
+    post:
+      tags:
+        - CustomerContactRegister
+      summary: 顧客連絡先登録/更新
+      description: |
+        クライアントが入力する情報をもとに顧客情報を登録する
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AppSheetContactId:
+                  type: string
+                  example: EF54AF8A
+                AppSheetCustomerId:
+                  type: string
+                  example: EF54AF8A
+                tel:
+                  type: integer
+                  format: number
+                  example: 09011112222
+                email:
+                  type: string
+                  format: email
+                  example: yamada@hoge.hoge
+              required:
+                - AppSheetCustomerId
+      responses:
+        '200':
+          description: 顧客連絡先登録成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 200
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "顧客連絡先登録に成功しました。"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                required:
+                  - statusCode
+                  - method
+                  - message
+                  - data
+        '409':
+          description: |
+            登録済みのAppSheetContactId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 409
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "登録済みのAppSheetContactIdです。"
+                  data:
+                    type: object
+                    example: null
+        '500':
+          $ref: '#/components/responses/500Error'
+  /customer_bank_register:
+    post:
+      tags:
+        - CustomerBankRegister
+      summary: 顧客連絡先登録/更新
+      description: |
+        クライアントが入力する情報をもとに顧客情報を登録する
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AppSheetBankId:
+                  type: string
+                  example: EF54AF8A
+                AppSheetCustomerId:
+                  type: string
+                  example: EF54AF8A
+                BankId:
+                  type: integer
+                  example: 123
+                BankBranchId:
+                  type: integer
+                  example: 456
+                BankType:
+                  type: string
+                  example: 普通
+                BankNumber:
+                  type: integer
+                  example: 01234567
+                BankName:
+                  type: string
+                  example: Test User
+              required:
+                - AppSheetCustomerId
+      responses:
+        '200':
+          description: 顧客口座登録成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 200
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "顧客口座登録に成功しました。"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                required:
+                  - statusCode
+                  - method
+                  - message
+                  - data
+        '409':
+          description: |
+            登録済みのAppSheetContactId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 409
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "登録済みのAppSheetContactIdです。"
+                  data:
                     type: object
                     example: null
         '500':
