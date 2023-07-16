@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: RESTful API
+  description: >-
+    バックエンドAPI
+servers:
+  - url: 'http://{host}:8081/api/v1'
+    description: go service api server endpoint application
+    variables:
+      host:
+        default: localhost
+        enum:
+          - localhost
+paths:
+  /customer_contact_register:
+    post:
+      tags:
+        - CustomerContactRegister
+      summary: 顧客連絡先登録/更新
+      description: |
+        クライアントが入力する情報をもとに顧客情報を登録する
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AppSheetContactId:
+                  type: string
+                  example: EF54AF8A
+                AppSheetCustomerId:
+                  type: string
+                  example: EF54AF8A
+                tel:
+                  type: integer
+                  format: number
+                  example: 09011112222
+                email:
+                  type: string
+                  format: email
+                  example: yamada@hoge.hoge
+              required:
+                - AppSheetCustomerId
+      responses:
+        '200':
+          description: 顧客連絡先登録成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 200
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "顧客連絡先登録に成功しました。"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                required:
+                  - statusCode
+                  - method
+                  - message
+                  - data
+        '409':
+          description: |
+            登録済みのAppSheetContactId
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    format: number
+                    example: 409
+                  method:
+                    type: string
+                    example: "POST"
+                  message:
+                    type: string
+                    example: "登録済みのAppSheetContactIdです。"
+                  data: 
+                    type: object
+                    example: null
+        '500':
+          $ref: '#/components/responses/500Error'
+components:
+  responses:
+    500Error:
+      description: |
+        サーバー上のエラー
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: integer
+                format: int64
+                example: "500"
+              method:
+                type: string
+                example: "POST"
+              message: 
+                type: string
+                example: "サーバー側で何らかのエラーが発生しました。"
+              data:
+                type: object
+                example: null
